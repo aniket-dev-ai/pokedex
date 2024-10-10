@@ -1,4 +1,5 @@
 // src/Details/Evolution.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +14,11 @@ const Evolution = ({ pokemonId }) => {
   useEffect(() => {
     const fetchEvolutionData = async () => {
       try {
-        // Fix: Add quotation marks around the URL
+        // Fetch species data to get the evolution chain URL
         const speciesResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
         const evolutionChainUrl = speciesResponse.data.evolution_chain.url;
+
+        // Fetch evolution chain data
         const evolutionResponse = await axios.get(evolutionChainUrl);
         setEvolutionChain(evolutionResponse.data);
       } catch (error) {
@@ -28,6 +31,7 @@ const Evolution = ({ pokemonId }) => {
     fetchEvolutionData();
   }, [pokemonId]);
 
+  // Recursively extract all evolutions from the evolution chain
   const extractEvolutions = (evolution) => {
     const evolutions = [];
     if (evolution.species) {
@@ -41,14 +45,14 @@ const Evolution = ({ pokemonId }) => {
     return evolutions;
   };
 
+  // Fetch the image of a Pokémon by its name
   const fetchPokemonImage = async (pokemonName) => {
     try {
-      // Fix: Add quotation marks around the URL
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
       return response.data.sprites.other['official-artwork'].front_default;
     } catch (error) {
       console.error('Error fetching Pokémon image:', error);
-      return null;
+      return null; // Return null if there's an error
     }
   };
 
@@ -56,10 +60,14 @@ const Evolution = ({ pokemonId }) => {
     const fetchImages = async () => {
       if (evolutionChain) {
         const evolutions = extractEvolutions(evolutionChain.chain);
+        
+        // Fetch images for all evolutions
         const promises = evolutions.map(async (name) => {
           const imageUrl = await fetchPokemonImage(name);
           return { name, imageUrl };
         });
+
+        // Wait for all image fetching to complete
         const resolvedImages = await Promise.all(promises);
         setImages(resolvedImages);
       }
@@ -68,10 +76,12 @@ const Evolution = ({ pokemonId }) => {
     fetchImages();
   }, [evolutionChain]);
 
+  // Handle navigation to the selected Pokémon's details
   const handleCardClick = (name) => {
-    navigate(`/pokemon/${name}`); // Fix: Add quotation marks around the URL
+    navigate(`/pokemon/${name}`);
   };
 
+  // Render loading state or error message if no data found
   if (loading) return <div className="text-center">Loading...</div>;
   if (!evolutionChain) return <div className="text-center text-gray-500">No evolution data found</div>;
 
@@ -80,8 +90,8 @@ const Evolution = ({ pokemonId }) => {
       <h2 className="text-2xl text-center mb-[4vh] font-bold">Evolution Chain</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {images.map(({ name, imageUrl }, index) => (
-          <div key={index} onClick={() => handleCardClick(name)} className=" cursor-pointer">
-            <Card name={name} image={imageUrl} type=" " className="border border-yellow-500" />
+          <div key={index} onClick={() => handleCardClick(name)} className="cursor-pointer">
+            <Card name={name} image={imageUrl} type="" className="border border-yellow-500" />
           </div>
         ))}
       </div>

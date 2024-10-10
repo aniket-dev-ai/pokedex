@@ -1,7 +1,10 @@
+// src/Details/Describe.js
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Describe = ({ pokemonData }) => {
+  // State variables to hold Pokémon strengths, weaknesses, resistances, vulnerabilities, and evolution chain
   const [strengths, setStrengths] = useState([]);
   const [weaknesses, setWeaknesses] = useState([]);
   const [resistances, setResistances] = useState([]);
@@ -12,33 +15,33 @@ const Describe = ({ pokemonData }) => {
     const fetchPokemonDetails = async () => {
       if (pokemonData) {
         const types = pokemonData.types.map(type => type.type.name);
-        
+
         try {
-          // Fetch type effectiveness data
-          const typeResponse = await Promise.all(
+          // Fetch type effectiveness data for each Pokémon type
+          const typeResponses = await Promise.all(
             types.map(type => axios.get(`https://pokeapi.co/api/v2/type/${type}`))
           );
 
-          // Calculate strengths and weaknesses based on type data
-          const fetchedStrengths = typeResponse.flatMap(response => 
+          // Extract strengths, weaknesses, resistances, and vulnerabilities from the fetched data
+          const fetchedStrengths = typeResponses.flatMap(response => 
             response.data.damage_relations.double_damage_to.map(type => type.name)
           );
-          const fetchedWeaknesses = typeResponse.flatMap(response => 
+          const fetchedWeaknesses = typeResponses.flatMap(response => 
             response.data.damage_relations.double_damage_from.map(type => type.name)
           );
-          const fetchedResistances = typeResponse.flatMap(response => 
+          const fetchedResistances = typeResponses.flatMap(response => 
             response.data.damage_relations.no_damage_from.map(type => type.name)
           );
-          const fetchedVulnerabilities = typeResponse.flatMap(response => 
+          const fetchedVulnerabilities = typeResponses.flatMap(response => 
             response.data.damage_relations.half_damage_from.map(type => type.name)
           );
 
-          // Set states
+          // Update state with unique values
           setStrengths([...new Set(fetchedStrengths)]);
           setWeaknesses([...new Set(fetchedWeaknesses)]);
           setResistances([...new Set(fetchedResistances)]);
           setVulnerabilities([...new Set(fetchedVulnerabilities)]);
-          
+
           // Fetch evolution data
           const speciesResponse = await axios.get(pokemonData.species.url);
           const evolutionResponse = await axios.get(speciesResponse.data.evolution_chain.url);
@@ -53,29 +56,28 @@ const Describe = ({ pokemonData }) => {
     fetchPokemonDetails();
   }, [pokemonData]);
 
+  // Function to recursively collect all evolutions from the evolution chain
   const getAllEvolutions = (chain) => {
-    const evolutions = [];
-    let currentChain = chain;
-
-    // Collect the initial species
-    evolutions.push(currentChain.species.name);
+    const evolutions = [chain.species.name]; // Start with the initial species
 
     // Recursively collect evolutions
-    const collectEvolutions = (chain) => {
-      if (chain.evolves_to.length > 0) {
-        chain.evolves_to.forEach(evolution => {
+    const collectEvolutions = (currentChain) => {
+      if (currentChain.evolves_to.length > 0) {
+        currentChain.evolves_to.forEach(evolution => {
           evolutions.push(evolution.species.name);
           collectEvolutions(evolution); // Recursive call for further evolutions
         });
       }
     };
 
-    collectEvolutions(currentChain);
+    collectEvolutions(chain);
     return evolutions;
   };
 
+  // Render a message if no Pokémon data is available
   if (!pokemonData) return <div>No Pokémon data available.</div>;
 
+  // Destructure necessary properties from pokemonData
   const {
     name,
     stats,
@@ -90,7 +92,7 @@ const Describe = ({ pokemonData }) => {
       <div className="w-full p-16 flex justify-between items-start">
         
         {/* Left: Type Section */}
-        <div className="text-left text-xl  bg-white p-4 rounded-xl border border-white backdrop-blur-sm bg-opacity-10 font-semibold ml-4">
+        <div className="text-left text-xl bg-white p-4 rounded-xl border border-white backdrop-blur-sm bg-opacity-10 font-semibold ml-4">
           <p>TYPE: {types.map(type => type.type.name).join(', ').toUpperCase()}</p>
           <p className='uppercase'>EVOLUTION: {resistances.join(', ') || "Achievable" }</p> {/* Dynamic evolution count */}
         </div>

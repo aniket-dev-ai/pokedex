@@ -1,4 +1,5 @@
 // src/Components/Cards.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,7 @@ const Cards = () => {
   // Function to fetch all Pokémon data
   const fetchAllPokemonData = async () => {
     try {
-      const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=25'); // Fetching more Pokémon
+      const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=25'); // Fetch initial set of Pokémon
       const detailedData = await Promise.all(
         response.data.results.map(async (pokemon) => {
           const pokemonDetail = await axios.get(pokemon.url);
@@ -32,7 +33,7 @@ const Cards = () => {
       setDisplayedPokemon(getRandomPokemon(detailedData, 20)); // Randomly select 20 Pokémon for display
     } catch (error) {
       console.error('Error fetching Pokémon data:', error);
-      setError(' ');
+      setError('Failed to load Pokémon data.'); // Set a meaningful error message
     } finally {
       setLoading(false); // Set loading to false when done
     }
@@ -48,7 +49,7 @@ const Cards = () => {
   const handleSearchChange = (query) => {
     setSearchQuery(query);
     
-    // Check for suggestions
+    // Check for suggestions based on search query
     if (query.length > 0) {
       const filteredSuggestions = allPokemonData.filter(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
@@ -72,21 +73,24 @@ const Cards = () => {
     setSuggestions([]); // Clear suggestions
   };
 
-  // Loading state rendering
+  // Render loading state
   if (loading) return <div className="text-center">Loading...</div>;
 
   return (
     <div className="p-4 bg-black min-h-screen scrollbar-hidden">
-      {error && <div className="text-red-500 text-center ">{error}</div>} {/* Error message */}
-      <div className='flex w-full '>
-      <input
-        type="text"
-        placeholder="Search Pokémon"
-        value={searchQuery}
-        onChange={(e) => handleSearchChange(e.target.value)}
-        className="mb-4 p-2 border rounded "
-      />
+      {error && <div className="text-red-500 text-center">{error}</div>} {/* Error message */}
+      
+      {/* Search Input */}
+      <div className='flex w-full'>
+        <input
+          type="text"
+          placeholder="Search Pokémon"
+          value={searchQuery}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          className="mb-4 p-2 border rounded"
+        />
       </div>
+      
       {/* Dropdown for suggestions */}
       {suggestions.length > 0 && (
         <div className="absolute bg-white border rounded shadow-lg z-10">
@@ -101,6 +105,8 @@ const Cards = () => {
           ))}
         </div>
       )}
+      
+      {/* Pokémon Cards Display */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {displayedPokemon.map(pokemon => (
           <div key={pokemon.id} onClick={() => navigate(`/pokemon/${pokemon.id}`)}>
