@@ -19,7 +19,7 @@ const Cards = () => {
   const fetchAllPokemonData = async () => {
     try {
       const response = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=25"
+        "https://pokeapi.co/api/v2/pokemon?limit=550"
       ); // Fetch initial set of Pokémon
       const detailedData = await Promise.all(
         response.data.results.map(async (pokemon) => {
@@ -35,10 +35,10 @@ const Cards = () => {
         })
       );
       setAllPokemonData(detailedData); // Store all Pokémon data
-      setDisplayedPokemon(getRandomPokemon(detailedData, 20)); // Randomly select 20 Pokémon for display
+      setDisplayedPokemon(getRandomPokemon(detailedData, 550)); // Randomly select 20 Pokémon for display
     } catch (error) {
-      console.error("Error fetching Pokémon data:", error);
-      setError("Failed to load Pokémon data."); // Set a meaningful error message
+      console.error(0, error);
+      setError( ); // Set a meaningful error message
     } finally {
       setLoading(false); // Set loading to false when done
     }
