@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Loader from "./loader";
+import { FaArrowUp } from "react-icons/fa";
 
 const Cards = () => {
   const [allPokemonData, setAllPokemonData] = useState([]); // Store all Pokémon data
@@ -12,14 +13,15 @@ const Cards = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const [suggestions, setSuggestions] = useState([]); // Suggestions for dropdown
-  const [error, setError] = useState(""); // State for error messages
+  const [error, setError] = useState(null); // State for error messages
   const navigate = useNavigate(); // Initialize navigation
 
   // Function to fetch all Pokémon data
   const fetchAllPokemonData = async () => {
+    setError(null);
     try {
       const response = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=550"
+        "https://pokeapi.co/api/v2/pokemon?limit=30"
       ); // Fetch initial set of Pokémon
       const detailedData = await Promise.all(
         response.data.results.map(async (pokemon) => {
@@ -38,7 +40,7 @@ const Cards = () => {
       setDisplayedPokemon(getRandomPokemon(detailedData, 550)); // Randomly select 20 Pokémon for display
     } catch (error) {
       console.error(0, error);
-      setError( ); // Set a meaningful error message
+      setError("Failed to load Pokémon data"); // Set a meaningful error message
     } finally {
       setLoading(false); // Set loading to false when done
     }
@@ -77,12 +79,6 @@ const Cards = () => {
     setSearchQuery(pokemon.name); // Set search input to clicked Pokémon name
     setSuggestions([]); // Clear suggestions
   };
-
-  // Render loading state
-  // if (!loading)
-  //   return (
-
-  //   );
 
   return (
     <div className="p-4 bg-black min-h-screen scrollbar-hidden">
@@ -135,6 +131,11 @@ const Cards = () => {
             </div>
           ))}
       </div>
+      {displayedPokemon.length > 0 && (
+        <p className="font-semibold my-2 flex items-center justify-center gap-2">
+          Explore more pokemon by searching <FaArrowUp />
+        </p>
+      )}
     </div>
   );
 };
