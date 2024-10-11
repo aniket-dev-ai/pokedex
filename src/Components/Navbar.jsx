@@ -55,6 +55,12 @@ const Navbar = () => {
           >
             About
           </Link>
+          <Link
+            to="/Login"
+            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+          >
+            Login
+          </Link>
         </div>
       </div>
     </nav>

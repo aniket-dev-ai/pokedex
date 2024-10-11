@@ -7,6 +7,7 @@ import Details from "./Details/Details";
 import Game from "./Components/Game";
 import About from "./Components/About";
 import Home from "./Components/Home";
+import Login from "./Components/Login";
 import "./App.css";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/pokemon/:id" element={<Details />} />
           <Route path="/game" element={<Game />} />
           <Route path="/about" element={<About />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </Router>
     </div>

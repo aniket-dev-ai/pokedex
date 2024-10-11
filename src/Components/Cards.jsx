@@ -120,7 +120,7 @@ const Cards = () => {
           <Loader />
         </div>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {displayedPokemon.length > 0 &&
           displayedPokemon.map((pokemon) => (
             <div
