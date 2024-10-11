@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import pokemongif from "../assets/pokeball-loader.gif";
 import { FaBars } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav className="bg-black h-[11vh] p-4 uppercase font-bold">
-      <div className="flex sm:justify-between sm:items-center max-sm:flex-col gap-2">
+      <div className="flex sm:justify-between sm:items-center max-sm:flex-col gap-2 relative">
         <div className="text-white text-lg font-bold pr-4 w-fit flex max-sm:justify-between max-sm:w-full max-sm:items-center">
           <img
             src={pokemongif}
@@ -20,11 +21,11 @@ const Navbar = () => {
             className="sm:hidden p-2 rounded-lg border hover:scale-90 transition-all duration-200"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <FaBars />
+            {menuOpen ? <FaX /> : <FaBars />}
           </button>
         </div>
         <div
-          className={`text-[2vh] flex w-full justify-around items-center max-sm:flex-col max-sm:space-y-3 max-sm:border-y-2 p-2 transition-all max-sm:duration-500 overflow-hidden max-sm:bg-gray-900 ${
+          className={`text-[2vh] max-sm:absolute max-sm:left-0 max-sm:right-0 max-sm:top-full max-sm:mt-2 flex w-full justify-around items-center max-sm:flex-col max-sm:space-y-3 max-sm:border-b-2 p-2 transition-all max-sm:duration-[400ms] overflow-hidden max-sm:bg-gray-900 max-sm:z-10 ${
             menuOpen
               ? "max-sm:max-h-96"
               : "max-sm:max-h-0 max-sm:p-0 max-sm:border-none"

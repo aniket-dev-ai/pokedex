@@ -3,11 +3,11 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="text-center bg-black h-[80vh] flex flex-col justify-around mt-20">
-      <h1 className="text-4xl xsm:text-6xl sm:text-9xl text-yellow-700 font-bold">
+    <div className="h-full text-center bg-black flex flex-col justify-around mt-10">
+      <h1 className="text-7xl sm:text-9xl text-yellow-700 font-bold">
         Welcome to the Pokémon App!
       </h1>
-      <p className="mt-4 text-violet-800 text-5xl">
+      <p className="mt-4 text-violet-800 text-3xl sm:text-5xl">
         Explore your favorite Pokémon and their evolutions.
       </p>
     </div>

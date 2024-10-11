@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Loader from "../Components/loader";
 
 const Move = ({ pokemonId }) => {
   const [moves, setMoves] = useState([]);
@@ -10,11 +11,13 @@ const Move = ({ pokemonId }) => {
     const fetchMoveData = async () => {
       try {
         // Fetch Pokémon data to get move details
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+        const response = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
+        );
         setMoves(response.data.moves);
       } catch (error) {
-        console.error('Error fetching move data:', error);
-        setError('Failed to load move data.'); // Set error message
+        console.error("Error fetching move data:", error);
+        setError("Failed to load move data."); // Set error message
       } finally {
         setLoading(false);
       }
@@ -24,7 +27,11 @@ const Move = ({ pokemonId }) => {
   }, [pokemonId]);
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -40,7 +47,10 @@ const Move = ({ pokemonId }) => {
       <h2 className="text-2xl font-bold text-center">Moves</h2>
       <ul className="list-disc pl-5 w-full h-[80vh]  p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {moves.map((moveData, index) => (
-          <li key={index} className="text-lg bg-gray-500 text-yellow-900 font-extrabold m-2 p-4 h-16 text-center rounded shadow">
+          <li
+            key={index}
+            className="text-lg bg-gray-500 text-yellow-900 font-extrabold m-2 p-4 h-16 text-center rounded shadow"
+          >
             {moveData.move.name}
             {/* Add more details about the move when needed */}
           </li>
