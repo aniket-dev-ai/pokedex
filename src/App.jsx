@@ -11,7 +11,7 @@ import "./App.css";
 
 const App = () => {
   return (
-    <div className="bg-black min-h-[100vh] scrollbar-hidden">
+    <div className="bg-black h-screen text-white scrollbar-hidden">
       <Router>
         <Navbar />
         <Routes>

@@ -43,7 +43,7 @@ const Details = () => {
   // Render loading state
   if (loading) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-3/4 flex justify-center items-center">
         <Loader />
       </div>
     );
@@ -75,7 +75,7 @@ const Details = () => {
   };
 
   return (
-    <div className="p-4 h-full bg-black text-yellow-700 flex flex-col justify-between">
+    <div className="w-full p-4 min-h-[90vh] bg-black text-yellow-700 flex flex-col justify-between">
       {/* Pokémon Name */}
       <h1 className="text-4xl font-extrabold uppercase w-full text-center mb-4">
         {pokemonDetails.name}
@@ -86,7 +86,7 @@ const Details = () => {
 
       {/* Footer with navigation buttons */}
       <footer className="mt-4">
-        <div className="flex h-[6vh] justify-around text-lg xsm:text-2xl font-bold">
+        <div className="flex justify-around items-center text-lg xsm:text-2xl font-bold">
           <button
             onClick={() => setActiveComponent("describe")}
             className="hover:text-yellow-300 btn"

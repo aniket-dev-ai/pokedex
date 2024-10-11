@@ -39,7 +39,7 @@ const Move = ({ pokemonId }) => {
   }
 
   if (moves.length === 0) {
-    return <div className="text-center text-gray-500">No moves found</div>;
+    return <div className="text-center text-white">No moves found</div>;
   }
 
   return (
@@ -49,7 +49,7 @@ const Move = ({ pokemonId }) => {
         {moves.map((moveData, index) => (
           <li
             key={index}
-            className="text-lg bg-gray-500 text-yellow-900 font-extrabold m-2 p-4 h-16 text-center rounded shadow"
+            className="text-lg bg-white bg-opacity-20 text-white font-extrabold m-2 p-4 h-16 text-center rounded shadow list-none"
           >
             {moveData.move.name}
             {/* Add more details about the move when needed */}

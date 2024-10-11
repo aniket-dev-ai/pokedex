@@ -89,7 +89,7 @@ const Evolution = ({ pokemonId }) => {
   // Render loading state or error message if no data found
   if (loading)
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-3/4 flex justify-center items-center">
         <Loader />
       </div>
     );

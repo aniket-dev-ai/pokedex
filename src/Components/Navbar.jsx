@@ -9,7 +9,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black h-[11vh] p-4 uppercase font-bold">
+    <nav className="bg-black h-[10vh] p-4 uppercase font-bold">
       <div className="flex sm:justify-between sm:items-center max-sm:flex-col gap-2 relative">
         <div className="text-white text-lg font-bold pr-4 w-fit flex max-sm:justify-between max-sm:w-full max-sm:items-center">
           <img

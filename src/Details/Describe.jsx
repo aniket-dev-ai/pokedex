@@ -92,11 +92,11 @@ const Describe = ({ pokemonData }) => {
   const { name, stats, types, sprites } = pokemonData;
 
   return (
-    <div className="p-6 sm:p-12 space-y-3 w-full mx-auto text-white flex flex-col items-center justify-around relative">
+    <div className="p-6 sm:p-12 w-full mx-auto text-white flex flex-col items-center justify-around relative">
       {/* Top Section */}
-      <div className="w-full p-8 sm:p-16 flex justify-center items-start mb-2">
+      <div className="w-full p-5 sm:p-16 flex justify-center items-center mb-2 gap-20 max-sm:flex-col">
         {/* Left: Type Section */}
-        <div className="text-left sm:text-xl bg-white p-4 rounded-xl border border-white backdrop-blur-sm bg-opacity-10 font-semibold ml-4">
+        <div className="max-xsm:w-full max-sm:w-3/4 w-max text-left sm:text-xl bg-white p-4 rounded-xl border border-white backdrop-blur-sm bg-opacity-10 font-semibold sm:mr-8">
           <p>
             TYPE:{" "}
             {types
@@ -119,16 +119,16 @@ const Describe = ({ pokemonData }) => {
               className="w-48 object-contain"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-36 h-36 sm:w-64 sm:h-64 rounded-full border-2 border-yellow-400 absolute"></div>
-              <div className="w-44 h-44 sm:w-72 sm:h-72 rounded-full border-2 border-yellow-400 absolute animate-spin-slow"></div>
-              <div className="w-52 h-52 sm:w-80 sm:h-80 rounded-full border-2 border-yellow-400 absolute animate-spin-slow-reverse"></div>
+              <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-full border-2 border-yellow-400 absolute"></div>
+              <div className="w-64 h-64 sm:w-72 sm:h-72 rounded-full border-2 border-yellow-400 absolute animate-spin-slow"></div>
+              <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full border-2 border-yellow-400 absolute animate-spin-slow-reverse"></div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Section */}
-      <div className="w-full flex justify-between px-4 gap-4 max-sm:flex-col">
+      <div className="w-full flex justify-between px-4 gap-4 max-sm:flex-col mt-20">
         {/* Left: Stats Section */}
         <div className="w-full sm:w-1/3 space-y-2">
           <h4 className="font-bold mb-2">Stats</h4>
