@@ -1,7 +1,7 @@
 import React from "react";
 
 const Game = () => {
-  return <div>Game</div>;
+  return <div className="w-full">Game</div>;
 };
 
 export default Game;

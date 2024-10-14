@@ -9,13 +9,13 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black h-[10vh] p-4 uppercase font-bold">
+    <nav className="w-full bg-black min-h-[10vh] p-4 uppercase font-bold">
       <div className="flex sm:justify-between sm:items-center max-sm:flex-col gap-2 relative">
         <div className="text-white text-lg font-bold pr-4 w-fit flex max-sm:justify-between max-sm:w-full max-sm:items-center">
           <img
             src={pokemongif}
             alt="poke"
-            className="min-h-10 min-w-10 h-[8vh] w-[5vw] border-r-2 pr-2"
+            className="h-14 w-14 sm:h-[74px] sm:w-[74px] border-r-2 pr-2"
           ></img>
           <button
             className="sm:hidden p-2 rounded-lg border hover:scale-90 transition-all duration-200"
@@ -33,31 +33,31 @@ const Navbar = () => {
         >
           <Link
             to="/"
-            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             Home
           </Link>
           <Link
             to="/pokelopedia"
-            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             Pokelopedia
           </Link>
           <Link
             to="/game"
-            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             Game
           </Link>
           <Link
             to="/about"
-            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             About
           </Link>
           <Link
-            to="/Login"
-            className="font-semibold text-white mx-4 hover:underline w-full text-center hover:text-base transition-all duration-200"
+            to="/login"
+            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             Login
           </Link>

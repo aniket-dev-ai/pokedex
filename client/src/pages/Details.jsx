@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Describe from "./Describe";
-import Evolution from "./Evolution";
-import Place from "./Place";
-import Move from "./Move";
-import Loader from "../Components/loader";
+import Describe from "../Components/Details/Describe";
+import Evolution from "../Components/Details/Evolution";
+import Place from "../Components/Details/Place";
+import Move from "../Components/Details/Move";
+import Loader from "../Components/Loader";
 
 const Details = () => {
   // Extracting the Pokémon ID from the URL parameters

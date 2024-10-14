@@ -1,13 +1,13 @@
-// src/Components/Cards.js
+// src/Components/Explore.js
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Card from "./Card";
-import Loader from "./loader";
+import Card from "../Components/Card";
+import Loader from "../Components/Loader";
 import { FaArrowUp } from "react-icons/fa";
 
-const Cards = () => {
+const Explore = () => {
   const [allPokemonData, setAllPokemonData] = useState([]); // Store all Pokémon data
   const [displayedPokemon, setDisplayedPokemon] = useState([]); // Store randomly selected Pokémon to display
   const [loading, setLoading] = useState(true); // Loading state
@@ -81,7 +81,7 @@ const Cards = () => {
   };
 
   return (
-    <div className="p-4 bg-black min-h-screen scrollbar-hidden">
+    <div className="w-full p-4 bg-black min-h-screen scrollbar-hidden">
       {error && (
         <div className="text-red-500 font-semibold text-center">{error}</div>
       )}
@@ -140,4 +140,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default Explore;
