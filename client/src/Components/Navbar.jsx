@@ -1,12 +1,57 @@
 // src/Components/Navbar.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import pokemongif from "../assets/pokeball-loader.gif";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaSignOutAlt } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../store/slices/userSlice";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSignOut = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/sign-out`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await res.json();
+
+      navigate("/login");
+
+      await dispatch(setUser(null));
+
+      toast(data?.message, {
+        position: "top-right",
+        duration: 2000,
+        style: {
+          backgroundColor: data?.success ? "green" : "red",
+          color: "white",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      toast("Something went wrong!", {
+        position: "top-right",
+        duration: 2000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <nav className="w-full bg-black min-h-[10vh] p-4 uppercase font-bold">
@@ -49,18 +94,39 @@ const Navbar = () => {
           >
             Game
           </Link>
+          {currentUser && (
+            <Link
+              to="/profile"
+              className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
+            >
+              {currentUser?.userName}
+            </Link>
+          )}
           <Link
             to="/about"
             className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
           >
             About
           </Link>
-          <Link
-            to="/login"
-            className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
-          >
-            Login
-          </Link>
+          {!currentUser ? (
+            <Link
+              to="/login"
+              className="font-semibold text-white hover:border-b-2 border-b-yellow-500 p-2 w-full text-center"
+            >
+              Login
+            </Link>
+          ) : (
+            <button
+              className="font-semibold text-white hover:border-b-2 border-b-red-500 hover:text-red-500 p-2 w-full text-center flex items-center justify-center gap-1 disabled:opacity-50"
+              onClick={handleSignOut}
+              disabled={loading}
+            >
+              <span>Logout</span>
+              <span>
+                <FaSignOutAlt />
+              </span>
+            </button>
+          )}
         </div>
       </div>
     </nav>

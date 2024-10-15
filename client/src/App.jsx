@@ -9,12 +9,16 @@ import Game from "./pages/Game";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import "./App.css";
+import ProtectedRoute from "./pages/protected/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
     <div className="bg-black min-h-screen text-white scrollbar-hidden overflow-hidden flex flex-col">
       <Router>
         <div className="w-full">
+          <Toaster />
           <Navbar />
         </div>
         <div className="w-full flex flex-1">
@@ -22,7 +26,22 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/pokelopedia" element={<Explore />} />
             <Route path="/pokemon/:id" element={<Details />} />
-            <Route path="/game" element={<Game />} />
+            <Route
+              path="/game"
+              element={
+                <ProtectedRoute>
+                  <Game />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
           </Routes>

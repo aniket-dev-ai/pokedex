@@ -3,7 +3,7 @@ import loaderImg from "../assets/pokeball-loader.gif";
 
 const Loader = () => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-full flex justify-center items-center">
       <img src={loaderImg} alt="loader" />
     </div>
   );
