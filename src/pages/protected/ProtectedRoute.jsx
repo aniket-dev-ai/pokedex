@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/Loader";
+import toast from "react-hot-toast";
 
 const ProtectedRoute = ({ children }) => {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -38,6 +39,18 @@ const ProtectedRoute = ({ children }) => {
         }
       } catch (error) {
         console.log(error);
+        toast(
+          error.message || "Something went wrong!. Please try again later!",
+          {
+            position: "top-right",
+            duration: 2000,
+            style: {
+              backgroundColor: "red",
+              color: "white",
+            },
+          }
+        );
+        navigate("/login");
       } finally {
         setLoading(false);
       }
